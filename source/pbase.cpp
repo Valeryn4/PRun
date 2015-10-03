@@ -15,6 +15,7 @@ PBase::PBase(QObject *parent) : QObject(parent)
 
 }
 
+
 bool PBase::create_tables() {
     if (!dbase.open())
         qDebug() << "PBase() open prun.sqlite fail!\n"
@@ -83,6 +84,7 @@ bool PBase::create_tables() {
 
 }
 
+
 bool PBase::addUser(QString name) {
 
     if (!dbase.open())
@@ -111,6 +113,7 @@ bool PBase::addUser(QString name) {
 
 }
 
+
 bool PBase::deleteUser(QString name) {
     if (!dbase.open())
         qDebug() << "PBase::deleteUser() open prun.sqlite fail!\n"
@@ -136,6 +139,7 @@ bool PBase::deleteUser(QString name) {
 
 }
 
+
 bool PBase::deleteUser(int ID) {
     if (!dbase.open())
         qDebug() << "PBase::deleteUser() open prun.sqlite fail!\n"
@@ -160,6 +164,7 @@ bool PBase::deleteUser(int ID) {
     }
 
 }
+
 
 bool PBase::updateUser(QString name, int pathID, bool pathAccess) {
     if (!dbase.open())
@@ -189,6 +194,7 @@ bool PBase::updateUser(QString name, int pathID, bool pathAccess) {
     }
 }
 
+
 bool PBase::updateUser(int ID, int pathID, bool pathAccess) {
     if (!dbase.open())
         qDebug() << "PBase::updateUser() open prun.sqlite fail!\n"
@@ -214,6 +220,60 @@ bool PBase::updateUser(int ID, int pathID, bool pathAccess) {
                  << "\nERROR: " << query_a.lastError().text();
         dbase.close();
         qDebug() << "PBase::updateUser() close prun.sqlite";
+        return false;
+    }
+}
+
+
+bool PBase::addPath(QString name, QString path) {
+    if (!dbase.open())
+        qDebug() << "PBase::addPath() open prun.sqlite fail!\n"
+                 << "ERROR " << dbase.lastError().text();
+    else
+        qDebug() << "PBase::addPath() open prun.sqlite access \n"
+                 << "VALIDE: " << dbase.isValid();
+
+    QString query_add_path = "INSERT INTO %1(name, path) VALUES('%2', '%3') ;";
+    query_add_path = query_add_path.arg(table_path, name, path);
+    QSqlQuery query_a;
+
+    if (query_a.exec(query_add_path)) {
+        qDebug() << "PBase::addPath() add access name " << name << " from table " + table_path;
+        dbase.close();
+        return true;
+    }
+    else {
+        qDebug() << "PBase::addPath() add FAIL! name " << name << " from table " + table_path
+                 << "\nERROR: " << query_a.lastError().text();
+        dbase.close();
+        qDebug() << "PBase::addPath() close prun.sqlite";
+        return false;
+    }
+}
+
+
+bool PBase::deletePath(int ID) {
+    if (!dbase.open())
+        qDebug() << "PBase::deletePath() open prun.sqlite fail!\n"
+                 << "ERROR " << dbase.lastError().text();
+    else
+        qDebug() << "PBase::deletePath() open prun.sqlite access \n"
+                 << "VALIDE: " << dbase.isValid();
+
+    QString query_delete_path = "DELETE FROM %1 WHERE id = %2";
+    query_delete_path = query_delete_path.arg(table_path, QString::number(ID));
+    QSqlQuery query_a;
+
+    if (query_a.exec(query_delete_path)) {
+        qDebug() << "PBase::deletePath() delete access id " << ID << " from table " + table_path;
+        dbase.close();
+        return true;
+    }
+    else {
+        qDebug() << "PBase::deletePath() delete FAIL! id " << ID << " from table " + table_path
+                 << "\nERROR: " << query_a.lastError().text();
+        dbase.close();
+        qDebug() << "PBase::deletePath() close prun.sqlite";
         return false;
     }
 }

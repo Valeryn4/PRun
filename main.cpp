@@ -16,6 +16,10 @@ int main(int argc, char *argv[])
 
     b.deleteUser(1);
     b.deleteUser("ololo");
+
+    b.addPath("path1", "/path/to/fuck");
+    b.addPath("calc", "path/to/calk");
+    b.deletePath(1);
     w.show();
 
 

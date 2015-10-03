@@ -32,13 +32,13 @@ public:
     bool updateUser(int ID, int pathID, bool pathAccess);
     bool updateUser(QString user_name, int pathID, bool pathAccess);
 
-    bool addPath(int ID, QString name, QString path);
+    bool addPath(QString name, QString path);
     bool deletePath(int ID);
     bool updatePath(int ID, QString name, QString path);
 
     int getUserID(QString name);
     QString getUserName(int ID);
-    bool getUserAccessPath(QString name);
+    bool getUserAccessPath(QString name, int ID);
 
     QString getPath(int ID);
     QString getNamePath(int ID);
