@@ -13,6 +13,11 @@
 #include <QDebug>
 #include <QString>
 
+#include <QSqlTableModel>
+#include <QSqlQueryModel>
+
+
+
 
 class PBase : public QObject
 {
@@ -38,12 +43,14 @@ public:
 
     int getUserID(QString name);
     QString getUserName(int ID);
-    bool getUserAccessPath(QString name, int ID);
+    bool getUserAccessPath(QString name, int pathID);
 
     QString getPath(int ID);
     QString getNamePath(int ID);
+    int getCountPath();
 
-
+    QSqlQueryModel * getQueryModel(QString table_name);
+    QSqlTableModel * getTableModel(QString table_name);
 
 signals:
 
