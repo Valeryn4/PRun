@@ -320,8 +320,11 @@ QString PBase::getNamePath(int ID) {
 }
 
 int PBase::getCountPath() {
+    QString query_count_line = "SELECT COUNT (ALL id) FROM " + table_path + ";";
+    QSqlQuery query_a(query_count_line);
 
-
+    query_a.next();
+    return query_a.value(0).toInt();
 }
 
 //=====debug===

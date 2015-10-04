@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <source/pbase.h>
+#include <source/pcore.h>
 
 
 namespace Ui {
@@ -12,7 +13,9 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    PBase b;
+private:
+    PBase * pbase;
+    PCore * pcore;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
