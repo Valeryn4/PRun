@@ -33,9 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << b.getPath(2);
     qDebug() << b.getNamePath(2);
 
-   // ui->tableView->setModel(b.getQueryModel("path"));
-   // ui->tableView->show();
-    ui->tableView->setModel(b.getTableModel("path"));
+    ui->tableView->setModel(b.getTableModel("path", this));
     ui->tableView->show();
 }
 

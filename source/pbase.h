@@ -30,6 +30,7 @@ private:
     bool create_tables();
 public:
     explicit PBase(QObject *parent = 0);
+    ~PBase();
 
     bool addUser(QString name);
     bool deleteUser(QString name);
@@ -49,12 +50,13 @@ public:
     QString getNamePath(int ID);
     int getCountPath();
 
-    QSqlQueryModel * getQueryModel(QString table_name);
-    QSqlTableModel * getTableModel(QString table_name);
+    QSqlQueryModel * getQueryModel(QString table_name, QObject *obj = 0);
+    QSqlTableModel * getTableModel(QString table_name, QObject *obj = 0);
 
 signals:
 
 public slots:
+
 };
 
 #endif // PBASE_H
