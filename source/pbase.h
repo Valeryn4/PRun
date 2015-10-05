@@ -37,6 +37,7 @@ public:
     bool deleteUser(int ID);
     bool updateUser(int ID, int pathID, bool pathAccess);
     bool updateUser(QString user_name, int pathID, bool pathAccess);
+    bool existsUser(QString user_name);
 
     bool addPath(QString name, QString path);
     bool deletePath(int ID);

@@ -14,7 +14,6 @@ PBase::PBase(QObject *parent) : QObject(parent)
 
     create_tables();
 
-
 }
 
 PBase::~PBase() {
@@ -80,6 +79,16 @@ bool PBase::create_tables() {
 
 }
 
+bool PBase::existsUser(QString user_name) {
+    QString query_exist_user = "SELECT user_name FROM %1 WHERE user_name = '%2'";
+    query_exist_user = query_exist_user.arg(table_users, user_name);
+    QSqlQuery query_q(query_exist_user);
+    while (query_q.next()) {
+        if (query_q.value("user_name") == user_name)
+            return true;
+    }
+    return false;
+}
 
 //===========
 //Users param
@@ -139,7 +148,7 @@ bool PBase::deleteUser(int ID) {
 
 bool PBase::updateUser(QString name, int pathID, bool pathAccess) {
 
-    QString query_update_user = "UPDATE %1 SET path%2 = %3 WHERE user_name = '%4';";
+    QString query_update_user = "UPDATE %1 SET path%2 = %3 WHERE user_name = '%4'  ;";
     if (pathAccess == true)
         query_update_user = query_update_user.arg(table_users, QString::number(pathID), QString::number(1), name);
     else
@@ -279,7 +288,8 @@ bool PBase::getUserAccessPath(QString name, int pathID) {
 
     bool access = false;
     while (query_a.next()) {
-        access = query_a.value(pathIDString).toBool();
+        if (query_a.value(pathIDString).toInt() == 1)
+            access = true;
         if (query_a.value("user_name").toString() == name)
             break;
     }

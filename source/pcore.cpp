@@ -111,7 +111,7 @@ bool PCore::kill(int ID) {
         }
         return false;
     }
-    if (process_status[ID] != RUN && !process_pull[ID]->state() == QProcess::NotRunning) {
+    if (process_status[ID] == RUN && process_pull[ID]->state() != QProcess::NotRunning) {
         count_process--;
         process_pull[ID]->kill();
         process_status[ID] = STOP;
@@ -121,9 +121,16 @@ bool PCore::kill(int ID) {
         process_pull[ID]->kill();
         return false;
     }
+
     return false;
 }
 
+bool PCore::getAccess(int ID) {
+    if (process_status[ID] != DENIDED)
+        return true;
+
+    return false;
+}
 
 // ================
 
@@ -152,6 +159,8 @@ void PCore::delete_proc_pull() {
     }
     if (chek_count != count_process)
         qDebug() << "chek_count != count_process\n chek_count = " << chek_count << ". count_process = " << count_process;
-    if (count_process == 0)
+    if (count_process == 0){
         qDebug() << "all process dead!";
+        emit signal_allProcessDead();
+    }
 }

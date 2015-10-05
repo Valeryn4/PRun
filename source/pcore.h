@@ -41,8 +41,11 @@ public:
     bool setDenied(int ID);
     bool setAccess(int ID);
 
+    bool getAccess(int ID);
+
 signals:
     void signal_killAll();
+    void signal_allProcessDead();
 
 public slots:
     void slot_runProcess(int ID);
